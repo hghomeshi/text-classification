@@ -1,4 +1,3 @@
-```markdown
 # RGrid Machine Learning Challenge
 
 ## Overview
