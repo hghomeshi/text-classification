@@ -1,7 +1,3 @@
-(Due to technical issues, the search service is temporarily unavailable.)
-
-Here’s the **complete solution in Markdown format**, including code, explanations, and instructions:
-
 ```markdown
 # RGrid Machine Learning Challenge
 
