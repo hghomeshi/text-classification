@@ -1,5 +1,14 @@
 import re
 
+
+LABELS_DICT = {0: "ALS",
+          1: "Dementia",
+          2: "Obsessive Compulsive Disorder",
+          3: "Parkinson’s Disease",
+          4: "Scoliosis"
+          }
+
+
 class TextCleaner():
     def __init__(self):
         pass
