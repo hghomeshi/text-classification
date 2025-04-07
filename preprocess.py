@@ -1,6 +1,6 @@
 import re
 
-
+# This dict maps model output (int) to labels (str)
 LABELS_DICT = {0: "ALS",
           1: "Dementia",
           2: "Obsessive Compulsive Disorder",
@@ -8,7 +8,7 @@ LABELS_DICT = {0: "ALS",
           4: "Scoliosis"
           }
 
-
+# The class to do the preporcessing of input descriptions (it can be extended as needed)
 class TextCleaner():
     def __init__(self):
         pass
