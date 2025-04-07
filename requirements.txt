@@ -1,6 +1,6 @@
 flask
 black
-transformers
+transformers==4.50.3
 datasets
 joblib
 torch
