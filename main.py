@@ -38,7 +38,8 @@ def predict(description: str) -> LABELS:
     model.eval()
     with torch.no_grad():
         prediction = model(**tokenized_text)
-    prediction = int(np.argmax(prediction.logits))
+        prediction = int(np.argmax(prediction.logits))
+
     return LABELS_DICT[prediction]
 
 
