@@ -1,2 +1,5 @@
 flask
 black
+transformers
+datasets
+joblib
