@@ -1,5 +1,11 @@
 from flask import Flask, jsonify, request
+from preprocess import TextCleaner, LABELS_DICT
 from typing import Literal
+
+
+# Load model and tokenizer
+model = joblib.load('DistilBERT_model.joblib')
+tokenizer = joblib.load('DistilBERT_tokenizer.joblib')
 
 
 app = Flask(__name__)
@@ -16,13 +22,16 @@ LABELS = Literal[
 
 def predict(description: str) -> LABELS:
     """
-    Function that should take in the description text and return the prediction
+    Function that should take in the description text, preprocess the text, tokenize it, and return the prediction
     for the class that we identify it to.
     The possible classes are: ['Dementia', 'ALS',
                                 'Obsessive Compulsive Disorder',
                                 'Scoliosis', 'Parkinson’s Disease']
     """
-    raise NotImplementedError()
+    cleaned_text = TextCleaner.clean_text(description)
+    tokenized_text = tokenizer(cleaned_text, truncation=True)
+    prediction = model.predict(tokenized_text)[0]
+    return LABELS_DICT[prediction]
 
 
 @app.route("/")
@@ -33,7 +42,7 @@ def hello_world():
 @app.route("/predict", methods=["POST"])
 def identify_condition():
     data = request.get_json(force=True)
-
+    
     prediction = predict(data["description"])
 
     return jsonify({"prediction": prediction})
