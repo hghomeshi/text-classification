@@ -1,3 +1,8 @@
+import joblib
+import torch
+
+import numpy as np
+
 from flask import Flask, jsonify, request
 from preprocess import TextCleaner, LABELS_DICT
 from typing import Literal
@@ -29,8 +34,11 @@ def predict(description: str) -> LABELS:
                                 'Scoliosis', 'Parkinson’s Disease']
     """
     cleaned_text = TextCleaner.clean_text(description)
-    tokenized_text = tokenizer(cleaned_text, truncation=True)
-    prediction = model.predict(tokenized_text)[0]
+    tokenized_text = tokenizer(cleaned_text, truncation=True, return_tensors='pt')
+    model.eval()
+    with torch.no_grad():
+        prediction = model(**tokenized_text)
+    prediction = int(np.argmax(prediction.logits))
     return LABELS_DICT[prediction]
 
 
@@ -42,7 +50,6 @@ def hello_world():
 @app.route("/predict", methods=["POST"])
 def identify_condition():
     data = request.get_json(force=True)
-    
     prediction = predict(data["description"])
 
     return jsonify({"prediction": prediction})
