@@ -51,6 +51,7 @@ def hello_world():
 @app.route("/predict", methods=["POST"])
 def identify_condition():
     data = request.get_json(force=True)
+    
     prediction = predict(data["description"])
 
     return jsonify({"prediction": prediction})
